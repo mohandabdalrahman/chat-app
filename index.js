@@ -15,4 +15,12 @@ const server = app.listen(PORT, () => console.log(`App listen on port ${PORT}`))
 const io = socket(server)
 io.on('connection', socket => {
   console.log('Socket connect', socket.id);
+  socket.on('chat', data => {
+    io.sockets.emit('chat', data)
+  })
+
+  // broadcast
+  socket.on('typing', data => {
+    socket.broadcast.emit('typing', data)
+  })
 })
